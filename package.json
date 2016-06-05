@@ -1,0 +1,22 @@
+{
+  "name": "phalcon-module-skeleton",
+  "version": "0.3.0",
+  "description": "Police Recruitment Project\r ========\r [![Build Status](https://travis-ci.org/ovr/phalcon-module-skeleton.png?branch=master)](https://travis-ci.org/ovr/phalcon-module-skeleton)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ovr/phalcon-module-skeleton.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ovr/phalcon-module-skeleton/issues"
+  },
+  "homepage": "https://github.com/ovr/phalcon-module-skeleton",
+  "dependencies": {
+    "bower": "~1.7.9"
+  }
+}
