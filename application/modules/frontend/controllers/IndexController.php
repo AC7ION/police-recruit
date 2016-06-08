@@ -12,7 +12,8 @@ class IndexController extends Controller
     public function indexAction()
     {
         //empty
-        $this->view->form = new NewCandidateForm(null, array('edit' => false));
+        $form = new NewCandidateForm(null, array('edit' => false));
+        $this->view->form = $form;
     }
 
     public function gettingStartedAction()

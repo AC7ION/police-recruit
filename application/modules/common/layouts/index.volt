@@ -9,6 +9,9 @@
     <title>Поліція | Рекрутинг</title>
 
     <link href="/dist/all.css" rel="stylesheet">
+    {#<link rel="icon" type="image/png" href="/img/favicon.png" />#}
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 </head>
@@ -47,5 +50,6 @@
         {{ content() }}
         {{ partial('footer') }}
     </div>
+    <script src="/js/main.js"></script>
 </body>
 </html>

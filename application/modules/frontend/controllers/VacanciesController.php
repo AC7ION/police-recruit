@@ -4,6 +4,7 @@ namespace Frontend\Controller;
 
 use Engine\Exception;
 use Forms\NewVacancyForm;
+use Models\Inputs;
 use Models\Vacancy;
 use Phalcon\Mvc\Controller;
 use Models\Candidate;
@@ -28,6 +29,9 @@ class VacanciesController extends Controller
         if ($this->request->isPost()) {
 
             $data = $this->request->getPost();
+            $data['created'] = date('Y-m-d H:i:s');
+            $data['changed'] = date('Y-m-d H:i:s');
+
             $newVacancy = new Vacancy();
             $this->view->isCreating = false;
 
@@ -72,19 +76,39 @@ class VacanciesController extends Controller
 
     public function listAction()
     {
-//        $candidates = Candidate::find();
-//        $numberPage = (!empty($this->request->get('page'))) ? $this->request->get('page') : 1;
-//
-//        $this->view->candidates = $candidates;
-//
-//        if ($candidates) {
-//            $paginator = new Paginator(array(
-//                'data' => $candidates,
-//                'limit'=> 5,
-//                'page' => $numberPage
-//            ));
-//            $this->view->page = $paginator->getPaginate();
-//        }
+        $vacancies = Vacancy::find();
+        $numberPage = (!empty($this->request->get('page'))) ? $this->request->get('page') : 1;
+
+        $this->view->vacancies = $vacancies;
+
+        if ($vacancies) {
+            $paginator = new Paginator(array(
+                'data' => $vacancies,
+                'limit'=> 5,
+                'page' => $numberPage
+            ));
+            $this->view->page = $paginator->getPaginate();
+        }
+    }
+
+
+    public function viewAction($id)
+    {
+        echo $id;
+        if (!empty($id)) {
+            $vacancy = Vacancy::findFirst($id);
+            $this->view->vacancy = $vacancy;
+
+            $inputs = Inputs::find();
+            $this->view->inputs = $inputs;
+
+        } else {
+            echo 5;
+            $this->dispatcher->forward(array('module' => 'frontend', 'controller' => 'vacancies', 'view' => 'list'));
+        }
+
+
+
     }
 
 }

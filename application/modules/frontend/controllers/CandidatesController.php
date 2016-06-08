@@ -67,6 +67,17 @@ class CandidatesController extends Controller
     }
 
 
+    public function viewAction($id)
+    {
+        if (!empty($id)) {
+            $candidate = Candidate::findFirst($id);
+            $this->view->candidate = $candidate;
+        }
+
+
+    }
+
+
     public function gettingStartedAction()
     {
 

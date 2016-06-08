@@ -200,6 +200,7 @@ return array(
                 ));
                 $compiler = $volt->getCompiler();
                 $compiler->addFunction('is_a', 'is_a');
+                $compiler->addFunction('array_splice', 'array_splice');
 
                 $compiler->addFilter('array_reverse', function ($array) {
                     return array_reverse($array);

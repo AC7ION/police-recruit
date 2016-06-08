@@ -35,7 +35,7 @@
 
 
         <div class="col-md-3" style="padding-top:20px;">
-            <form action="/tickets/list" method="post">
+            <form action="/frontend/vacancies/list" method="post">
                 <div class="input-group">
 
                     <input name="searchKey" type="text" class="form-control  input-sm" id="input_find"
@@ -61,161 +61,91 @@
 
 
 <br>
-<div id="spinner" class="well well-large well-transparent lead">
-    <center>
-        <i class="fa fa-spinner fa-spin icon-2x"></i> Loading ...
-    </center>
-</div>
+{#<div id="spinner" class="well well-large well-transparent lead">#}
+    {#<center>#}
+        {#<i class="fa fa-spinner fa-spin icon-2x"></i> Loading ...#}
+    {#</center>#}
+{#</div>#}
 
-{#{% if page.items|length %}#}
-    {#<table class="table table-bordered table-hover" style=" font-size: 14px; ">#}
-        {#<thead>#}
-        {#<tr>#}
-            {#<th>#}
-                {#<center>#</center>#}
-            {#</th>#}
-            {#<th>#}
-                {#<center>ПІБ</center>#}
-            {#</th>#}
-            {#<th>#}
-                {#<center>Адреса</center>#}
-            {#</th>#}
-            {#<th>#}
-                {#<center>Водіння</center>#}
-            {#</th>#}
-            {#<th>#}
-                {#<center>Робота за ПК</center>#}
-            {#</th>#}
-            {#<th>#}
-                {#<center>Створено</center>#}
-            {#</th>#}
-            {#<th>#}
-                {#<center>Змінено</center>#}
-            {#</th>#}
-            {#<th>#}
-                {#<center>Дія</center>#}
-            {#</th>#}
-        {#</tr>#}
-        {#</thead>#}
-        {#<tbody>#}
+{% if page.items|length %}
+    <table class="table table-bordered table-hover" style=" font-size: 14px; ">
+        <thead>
+        <tr>
+            <th>
+                <center>#</center>
+            </th>
+            <th>
+                <center>Назва</center>
+            </th>
+            <th>
+                <center>Категорія</center>
+            </th>
+            <th>
+                <center>Департамент</center>
+            </th>
+            <th>
+                <center>Створено</center>
+            </th>
+            <th>
+                <center>Змінено</center>
+            </th>
+            <th>
+                <center>Дія</center>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
 
-        {#{% for candidate in page.items %}#}
+        {% for vacancy in page.items %}
 
-            {#<tr id="tr_{{ candidate.id }}" class="">#}
+            <tr id="tr_{{ vacancy.id }}" class="">
 
-                {#<td><small>{{ candidate.id }}</small></td>#}
-                {#<td><small><a class="" data-toggle="tooltip"#}
-                              {#data-placement="bottom"#}
-                              {#title="test"#}
-                              {#href="/frontend/view/{{ candidate.id }}">{{ candidate.pib }}</a></small></td>#}
-                {#<td><small>{{ candidate.address }}</small></td>#}
-                {#<td><small>{{ candidate.drivingExp }} ({{ candidate.drivingNumber }})</small></td>#}
-                {#<td><small>{{ candidate.pcWorking }}</small></td>#}
-                {#<td><small><time id="c" datetime="{{ candidate.created }}"></time>{{ candidate.created }}</small></td>#}
-                {#<td><small><time id="a" datetime="{{ candidate.changed }}"></time>{{ candidate.changed }}</small></td>#}
-                {#<td><small>t</small></td>#}
-                {#<td><small>{{ ticket.user_to.fio }}</small></td>#}
-                {#<td><small>{{ ticket.getStatusLayout() }}</small></td>#}
-                {#<td style=" vertical-align: middle; ">#}
-                {#<center>#}
-                {#<div class="btn-group btn-group-xs actions">#}
-                {#<button data-toggle="tooltip" data-placement="bottom"#}
-                {#type="button"#}
-                {#class="btn btn-success" user="{{ user.id }}"#}
-                {#value="{{ ticket.id }}" id="action_list_ok"#}
-                {#status="lock">d</button>#}
-                {#</div>#}
-                {#<div class="btn-group btn-group-xs actions">#}
-                {#<button data-toggle="tooltip" data-placement="bottom" title="" type="button" class="btn btn-warning" user="{{ user.id }}" value="{{ ticket.id }}" id="action_list_lock" status="{% if ticket.lock_by %}unlock{% else %}lock{% endif %}" data-original-title="разблокировать"><i class="fa fa-{% if ticket.lock_by %}lock{% else %}unlock{% endif %}"></i></button>#}
+                <td><small>{{ vacancy.id }}</small></td>
+                <td><small><a class="" data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="test"
+                              href="/frontend/vacancies/view/{{ vacancy.id }}">{{ vacancy.title }}</a></small></td>
+                <td><small>{#{ vacancy.category }#}</small></td>
+                <td><small>{#{ vacancy.department }#}</small></td>
+                <td><small><time id="c" datetime="{{ vacancy.created }}"></time>{{ vacancy.created }}</small></td>
+                <td><small><time id="a" datetime="{{ vacancy.changed }}"></time>{{ vacancy.changed }}</small></td>
+                <td style=" vertical-align: middle; ">
+                <center>
+                <div class="btn-group btn-group-xs actions">
+                <button data-toggle="tooltip" data-placement="bottom"
+                type="button"
+                class="btn btn-success" user=""
+                value="" id="action_list_ok"
+                status="lock">d</button>
+                </div>
+                <div class="btn-group btn-group-xs actions">
+                <button data-toggle="tooltip" data-placement="bottom" title="" type="button" class="btn btn-warning" user="" value="" id="action_list_lock" data-original-title="разблокировать"></button>
 
-                {#<button data-toggle="tooltip" data-placement="bottom" title="" type="button" class="btn btn-success" user="{{ user.id }}" value="{{ ticket.id }}" id="action_list_ok" status="{% if ticket.ok_by %}unok{% else %}ok{% endif %}" data-original-title="выполнить"><i class="fa {% if ticket.ok_by %}fa-check-circle-o{% else %}fa-circle-o{% endif %}"></i></button>#}
-                {#</div>#}
-                {#</center>#}
-                {#</td>#}
+                <button data-toggle="tooltip" data-placement="bottom" title="" type="button" class="btn btn-success" user="" value="" id="action_list_ok"  data-original-title="выполнить"></button>
+                </div>
+                </center>
+                </td>
 
-            {#</tr>#}
+            </tr>
 
-        {#{% endfor %}#}
-        {#</tbody>#}
+        {% endfor %}
+        </tbody>
 
-    {#</table>#}
-{#{% else %}#}
-    {#<div id="content">#}
+    </table>
+{% else %}
+    <div id="content">
 
 
-        {#<div id="spinner" class="well well-large well-transparent lead">#}
-            {#<center>#}
-                {#Нет заявок<br>#}
-                {#<img src="/img/notickets.png">#}
-            {#</center>#}
-        {#</div>#}
+        <div id="spinner" class="well well-large well-transparent lead">
+            <center>
+                Вакансій немає<br>
+                <img src="/img/notickets.png">
+            </center>
+        </div>
 
 
-    {#</div>#}
-{#{% endif %}#}
+    </div>
+{% endif %}
 {#{% include('tickets/listContent') %}#}
 
-{#{{ content() }}#}
-
-{#{% if page.items|length %}#}
-    {#<div class="">#}
-        {#<div class="col-sm-12">#}
-
-            {#<div class="">#}
-
-                {#<button id="sort_list" value="main" type="button" class="btn btn-primary " data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Показать все"><i class="fa fa-home"></i></button>#}
-
-                {#<button id="sort_list" value="free" data-toggle="tooltip" data-placement="bottom" title="" type="button" class="btn btn-info " data-original-title="Свободные"><i class="fa fa-circle-thin"></i>#}
-                {#</button>#}
-
-                {#<button id="sort_list" value="ok" data-toggle="tooltip" data-placement="bottom" title="" type="button" class="btn btn-success " data-original-title="Выполненные"><i class="fa fa-check-circle"></i>#}
-                {#</button>#}
-
-                {#<button id="sort_list" value="ilock" data-toggle="tooltip" data-placement="bottom" title="" type="button" class="btn btn-warning " data-original-title="Заблокированные мной"><i class="fa fa-gavel"></i>#}
-                {#</button>#}
-
-                {#<button id="sort_list" value="lock" data-toggle="tooltip" data-placement="bottom" title="" type="button" class="btn btn-default " data-original-title="Заблокированые не мной"><i class="fa fa-gavel"></i>#}
-                {#</button>#}
-
-                {#<div class="row">#}
-                    {#<div class="col-sm-1">#}
-                        {#<p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">#}
-                            {#{{ page.current~"/"~page.total_pages }}#}
-                        {#</p>#}
-                    {#</div>#}
-                    {#<div class="col-sm-11">#}
-                        {#<nav>#}
-                            {#<ul class="pagination">#}
-                                {#<li>{{ link_to("frontend/candidates/list", "Перша") }}</li>#}
-                                {#<li>{{ link_to("frontend/candidates/list?page="~page.before, "Попередня") }}</li>#}
-                                {#<li>{{ link_to("frontend/candidates/list?page="~page.next, "Наступна") }}</li>#}
-                                {#<li>{{ link_to("tickets/list?page="~page.last, "Остання") }}</li>#}
-                            {#</ul>#}
-                        {#</nav>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-
-
-        {#</div>#}
-
-
-
-        {#<div class="text-center">#}
-
-
-            {#<div class="pull-right">#}
-
-            {#<div class="btn-group btn-group-xs">#}
-            {#<button id="list_set_ticket" type="button" class="btn btn-default ">10#}
-            {#</button>#}
-            {#<button id="list_set_ticket" type="button" class="btn btn-default ">15#}
-            {#</button>#}
-            {#<button id="list_set_ticket" type="button" class="btn btn-default ">20#}
-            {#</button>#}
-            {#</div>#}
-
-            {#</div>#}
-        {#</div>#}
-    {#</div>#}
-{#{% endif %}#}
+{{ content() }}

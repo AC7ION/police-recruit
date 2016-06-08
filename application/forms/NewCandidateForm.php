@@ -54,6 +54,8 @@ class NewCandidateForm extends Form
             'data-trigger'   => "manual",
             'data-html'      => "true",
             'data-placement' => "right",
+            'required'       => "required",
+            'placeholder'    => "Введіть, будь ласка, ПІБ повністю"
         );
         $name = new Text("pib", $name_array);
         $name->setLabel("ПІБ");
@@ -65,44 +67,6 @@ class NewCandidateForm extends Form
         ));
         $this->add($name);
 
-
-        $address = new Text("address", array(
-            'class' => 'form-control'
-        ));
-        $address->setLabel("Адреса проживання");
-        $address->setFilters(array('striptags', 'string'));
-        $address->addValidators(array(
-            new PresenceOf(array(
-                'message' => 'Введіть адресу проживання, будь ласка'
-            )),
-        ));
-        $this->add($address);
-
-
-        $driving = new Text("drivingExp", array(
-            'class' => 'form-control'
-        ));
-        $driving->setLabel("Власний транспорт");
-        $driving->setFilters(array('striptags', 'string'));
-        $driving->addValidators(array(
-            new PresenceOf(array(
-                'message' => 'Введіть інформацію про власний транспорт, будь ласка'
-            )),
-        ));
-        $this->add($driving);
-
-
-        $drivingNumber = new Text("drivingNumber", array(
-            'class' => 'form-control'
-        ));
-        $drivingNumber->setLabel("Посвідчення водія (номер)");
-        $drivingNumber->setFilters(array('striptags', 'string'));
-        $drivingNumber->addValidators(array(
-            new PresenceOf(array(
-                'message' => 'Введіть інформацію про власний транспорт, будь ласка'
-            )),
-        ));
-        $this->add($drivingNumber);
 
 
         $marital = new Select('maritalStatus',
@@ -122,6 +86,44 @@ class NewCandidateForm extends Form
             ));
         $marital->setLabel('Сімейний стан');
         $this->add($marital);
+
+
+        $address = new Text("address", array(
+            'class' => 'form-control'
+        ));
+        $address->setLabel("Адреса проживання");
+        $address->setFilters(array('striptags', 'string'));
+        $address->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'Введіть адресу проживання, будь ласка'
+            )),
+        ));
+        $this->add($address);
+
+
+        $phoneMobile = new Text("phoneMobile", array(
+            'class' => 'form-control',
+            'value' => '+380',
+            'pattern' => '^[0-9-\(\) \+]{10,13}$',
+            'placeholder' => '+380990123123'
+        ));
+        $phoneMobile->setLabel("Мобільний телефон");
+        $phoneMobile->setFilters(array('striptags', 'string'));
+        $phoneMobile->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'Введіть свій мобільний телефон'
+            )),
+        ));
+        $this->add($phoneMobile);
+
+
+        $phoneHome = new Text("phoneHome", array(
+            'class' => 'form-control'
+        ));
+        $phoneHome->setLabel("Домашній телефон");
+        $phoneHome->setFilters(array('striptags', 'string'));
+        $this->add($phoneHome);
+
 
 
         $education = new Select('education',
@@ -164,6 +166,45 @@ class NewCandidateForm extends Form
             ));
         $educationProfile->setLabel('Профіль освіти');
         $this->add($educationProfile);
+
+
+        $educationText = new Text("educationText", array(
+            'class' => 'form-control'
+        ));
+        $educationText->setLabel("Місце навчання");
+        $educationText->setFilters(array('striptags', 'string'));
+        $this->add($educationText);
+
+        $driving = new Text("drivingExp", array(
+            'class' => 'form-control'
+        ));
+        $driving->setLabel("Власний транспорт");
+        $driving->setFilters(array('striptags', 'string'));
+        $driving->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'Введіть інформацію про власний транспорт, будь ласка'
+            )),
+        ));
+        $this->add($driving);
+
+
+        $drivingNumber = new Text("drivingNumber", array(
+            'class' => 'form-control'
+        ));
+        $drivingNumber->setLabel("Посвідчення водія (номер)");
+        $drivingNumber->setFilters(array('striptags', 'string'));
+        $drivingNumber->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'Введіть інформацію про власний транспорт, будь ласка'
+            )),
+        ));
+        $this->add($drivingNumber);
+
+
+
+
+
+
 
 
         $pcWorking = new Text("pcWorking", array(

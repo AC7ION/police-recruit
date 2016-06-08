@@ -107,7 +107,7 @@
                 <td><small><a class="" data-toggle="tooltip"
                               data-placement="bottom"
                               title="test"
-                              href="/frontend/view/{{ candidate.id }}">{{ candidate.pib }}</a></small></td>
+                              href="/frontend/candidates/view/{{ candidate.id }}">{{ candidate.pib }}</a></small></td>
                 <td><small>{{ candidate.address }}</small></td>
                 <td><small>{{ candidate.drivingExp }} ({{ candidate.drivingNumber }})</small></td>
                 <td><small>{{ candidate.pcWorking }}</small></td>
