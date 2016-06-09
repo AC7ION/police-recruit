@@ -29,7 +29,7 @@
 
         {{ form("frontend/candidates/index", 'id': 'new-candidate') }}
         <div class="col-md-12">
-            <div class="bs-callout bs-callout-danger">
+            <div class="bs-callout bs-callout-info">
                 <div class="col-sm-3">
                     <h4>Основна інформація</h4>
                 </div>

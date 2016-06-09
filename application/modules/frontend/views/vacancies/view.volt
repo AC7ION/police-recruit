@@ -76,6 +76,14 @@
                             </div>
                         </div>
                     </div>
+
+
+                    <div class="bs-callout bs-callout-danger">
+                        <h4>Додавання ваги вакансії</h4>
+                        <div id="weightsContainer"></div>
+                    </div>
+
+
                     <div class="bs-callout bs-callout-danger">
                         <h4>Summary</h4>
                         <p>

@@ -160,7 +160,9 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
 }
 
 
-
+.bs-callout-info {
+    border-left-color: #687dd9;
+}
 
 
 

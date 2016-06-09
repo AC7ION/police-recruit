@@ -3,6 +3,8 @@
 namespace Frontend\Controller;
 
 use Engine\Exception;
+use Models\Vacancy;
+use Models\Weights;
 use Phalcon\Mvc\Controller;
 use Models\Candidate;
 use Forms\NewCandidateForm;
@@ -72,7 +74,37 @@ class CandidatesController extends Controller
         if (!empty($id)) {
             $candidate = Candidate::findFirst($id);
             $this->view->candidate = $candidate;
+
+
+
+
+            $vacanciesArr = array();
+            foreach (Vacancy::find() as $vacancy) {
+                $numberOfWeights = count($vacancy->weights);
+                $successfulWeights = 0;
+
+                if ($numberOfWeights) {
+                    foreach ($vacancy->weights as $weight) {
+                        if ($weight->isCandidateFits($candidate)) {
+                            $successfulWeights++;
+                        }
+                    }
+
+                    $percent = $successfulWeights/$numberOfWeights*100;
+                    $vacanciesArr[] = array(
+                        'id' => $vacancy->id,
+                        'title' => $vacancy->title,
+                        'percent' => $percent
+                    );
+                }
+            }
+
+            $this->view->vacancies = $vacanciesArr;
+
+
+
         }
+
 
 
     }

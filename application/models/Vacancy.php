@@ -59,6 +59,13 @@ class Vacancy extends \Phalcon\Mvc\Model
     public $created;
 
 
+    public function initialize()
+    {
+        $this->hasMany('id', '\Models\Weights', 'vacancyId', array('alias' => 'weights'));
+
+    }
+
+
     public function getSource()
     {
         return "vacancies";

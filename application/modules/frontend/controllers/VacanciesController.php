@@ -84,7 +84,7 @@ class VacanciesController extends Controller
         if ($vacancies) {
             $paginator = new Paginator(array(
                 'data' => $vacancies,
-                'limit'=> 5,
+                'limit'=> 25,
                 'page' => $numberPage
             ));
             $this->view->page = $paginator->getPaginate();

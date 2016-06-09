@@ -24,6 +24,8 @@
     "react-dom": "~0.14.8",
     "react": "~0.14.8",
     "watchify": "^3.6.1",
-    "react-webstorage": "0.0.4"
+    "react-webstorage": "0.0.4",
+    "jquery": "~2.2.4",
+    "react-bootstrap": "~0.29.4"
   }
 }
