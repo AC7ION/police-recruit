@@ -48,6 +48,13 @@ class Weights extends Model
      */
     public $value;
 
+    /**
+     * @Column(name="operation", type="string")
+     * @var string
+     */
+    public $operation;
+
+
     public function initialize()
     {
         $this->belongsTo('inputId', '\Models\Inputs', 'id', array('alias' => 'input'));
@@ -61,10 +68,14 @@ class Weights extends Model
     }
 
 
+    /**
+     * Check is candidate fits to vacancy by weights
+     *
+     * @param Candidate $candidate
+     * @return bool
+     */
     public function isCandidateFits(Candidate $candidate)
     {
-//        echo $candidate->{$this->input->column};
-//        if ($candidate->{$this->input->column} )
         if ($this->checkByFieldType($candidate)) {
             return true;
         } else {
@@ -73,36 +84,37 @@ class Weights extends Model
     }
 
 
+    /**
+     * Checks is field satisfies condition
+     *
+     * @param Candidate $candidate
+     * @return bool
+     */
     private function checkByFieldType(Candidate $candidate)
     {
         $candidateValue = $candidate->{$this->input->column};
 
-        switch ($this->input->type) {
-            case 'Text':
-                if (stripos($candidateValue, $this->value)) {
-                    echo "1 ";
-                    return true;
-                } else {
-                    return false;
-                }
+        switch ($this->operation) {
+            case 'like':
+                echo "1 ";
+                return stripos($candidateValue, $this->value);
                 break;
 
-            case 'Integer':
-                if (!is_null($candidateValue)) {
-                    echo "2 ";
-                    return true;
-                } else {
-                    return false;
-                }
+            case 'notnull':
+                echo "2 ";
+                return (!is_null($candidateValue));
                 break;
 
-            case 'Select':
-                if ($candidateValue == $this->value) {
-                    echo "3 ";
-                    return true;
-                } else {
-                    return false;
-                }
+            case 'null':
+                return (is_null($candidateValue));
+                break;
+
+            case 'equal':
+                return $candidateValue == $this->value;
+                break;
+
+            case 'notequal':
+                return $candidateValue != $this->value;
                 break;
 
             default:

@@ -38111,16 +38111,242 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var WebStorage = require('react-webstorage');
 var Button = require('react-bootstrap').Button;
+var ButtonToolbar = require('react-bootstrap').ButtonToolbar;
+var FormGroup = require('react-bootstrap').FormGroup;
+var ControlLabel = require('react-bootstrap').ControlLabel;
+var FormControl = require('react-bootstrap').FormControl;
+var Grid = require('react-bootstrap').Grid;
+var Row = require('react-bootstrap').Row;
+var Col = require('react-bootstrap').Col;
 
 var webStorage = new WebStorage(window.localStorage || window.sessionStorage /* or poly-fill thereof */
 );
-
 const weightsContainer = document.getElementById('weightsContainer');
 
-ReactDOM.render(React.createElement(
-    Button,
-    null,
-    'test'
-), weightsContainer);
+var WeightsRow = React.createClass({
+    displayName: 'WeightsRow',
+
+    getInitialState: function () {
+        return {
+            columnValue: this.props.column,
+            operationValue: this.props.operation,
+            inputValue: this.props.value
+        };
+    },
+    handleColumnChange: function (event) {
+        this.state.columnValue = event.target.value;
+    },
+    handleOperationChange: function (event) {
+        this.state.operationValue = event.target.value;
+    },
+    handleValueChange: function (event) {
+        this.state.inputValue = event.target.value;
+    },
+    render: function () {
+        return React.createElement(
+            Row,
+            { className: 'show-grid', style: { marginBottom: 15 + 'px' } },
+            React.createElement(
+                Col,
+                { xs: 6, md: 4 },
+                React.createElement(
+                    FormControl,
+                    { ref: 'columnSelect', onChange: this.handleColumnChange, defaultValue: this.props.column,
+                        pullLeft: true, componentClass: 'select', placeholder: 'Оберіть поле' },
+                    React.createElement(
+                        'option',
+                        { value: '1' },
+                        'ФІО'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: '2' },
+                        'Адреса'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: '3' },
+                        'Рекомендації'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: '4' },
+                        'Досвід водіння'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: '5' },
+                        'Водійське посвідчення'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: '6' },
+                        'Робота на ПК'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: '7' },
+                        'Освіта'
+                    )
+                )
+            ),
+            React.createElement(
+                Col,
+                { sm: 1, className: 'col-icon' },
+                React.createElement('i', { className: 'fa fa-arrow-right', 'aria-hidden': 'true' })
+            ),
+            React.createElement(
+                Col,
+                { xs: 6, md: 3, className: '' },
+                React.createElement(
+                    FormControl,
+                    { ref: 'operationSelect', defaultValue: this.props.operation,
+                        onChange: this.handleOperationChange, componentClass: 'select',
+                        placeholder: 'Оберіть тип ваги' },
+                    React.createElement(
+                        'option',
+                        { value: 'equal' },
+                        'Рівність'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: 'like' },
+                        'LIKE'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: 'notlike' },
+                        'Not LIKE'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: 'notnull' },
+                        'Заповнене'
+                    ),
+                    React.createElement(
+                        'option',
+                        { value: 'null' },
+                        'Не заповнене'
+                    )
+                )
+            ),
+            React.createElement(
+                Col,
+                { sm: 1, className: 'col-icon' },
+                React.createElement('i', { className: 'fa fa-arrow-right', 'aria-hidden': 'true' })
+            ),
+            React.createElement(
+                Col,
+                { xsHidden: true, md: 4 },
+                React.createElement(FormControl, { ref: 'valueInput', onChange: this.handleValueChange,
+                    defaultValue: this.props.value, inputRef: ref => {
+                        this.input = ref;
+                    },
+                    type: 'text', placeholder: 'Введіть значення' })
+            )
+        );
+    },
+    animate: function () {
+        console.log('Pretend %s is animating', this.props.title);
+    }
+});
+
+var WeightsField = React.createClass({
+    displayName: 'WeightsField',
+
+    getInitialState: function () {
+        return {
+            items: [],
+            count: 0
+        };
+    },
+    componentDidMount: function () {
+        this.serverRequest = $.get('/frontend/vacancies/getWeightsById/4', function (result) {
+            var serverData = JSON.parse(result);
+            //console.log(serverData);
+
+            serverData.map(function (item, i) {
+                this.addWeight(item.column, item.operation, item.value);
+            }, this);
+        }.bind(this));
+    },
+    handleAddWeight: function () {
+        this.addWeight();
+    },
+    addWeight: function (column = 1, operation = 'equal', value = '') {
+        var i = this.state.count;
+        if (++i < 6) {
+            this.state.count++;
+            var items = this.state.items;
+
+            var newItem = { column: column, operation: operation, value: value };
+
+            items.push(newItem);
+            this.setState({ items: items }, function () {
+                if (items.length === 1) {
+                    this.refs.item0.animate();
+                }
+            }.bind(this));
+        } else {
+            alert('Можна додали не більше 5 ваг');
+        }
+    },
+    handleSubmit: function () {
+        console.log(this.refs);
+        var finalData = [];
+        for (var i = 0; i < this.state.count; i++) {
+            finalData.push(this.refs['item' + i].state);
+        }
+        $.post({
+            type: "POST",
+            url: '/frontend/vacancies/setWeights/' + vacancyId,
+            data: { data: finalData },
+            success: function (data) {
+                console.log(JSON.parse(data));
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    },
+    render: function () {
+        return React.createElement(
+            FormGroup,
+            { controlId: 'formControlsSelect' },
+            React.createElement(
+                'form',
+                null,
+                this.state.items.map(function (item, i) {
+                    return React.createElement(WeightsRow, { column: item.column, operation: item.operation, value: item.value,
+                        key: i, title: item, ref: 'item' + i });
+                }, this),
+                React.createElement(
+                    Row,
+                    null,
+                    React.createElement(
+                        Col,
+                        { md: 12 },
+                        React.createElement(
+                            ButtonToolbar,
+                            null,
+                            React.createElement(
+                                Button,
+                                { onClick: this.handleAddWeight },
+                                'Додати вагу'
+                            ),
+                            React.createElement(
+                                Button,
+                                { onClick: this.handleSubmit, bsStyle: 'success' },
+                                'Зберегти зміни'
+                            )
+                        )
+                    )
+                )
+            )
+        );
+    }
+});
+
+ReactDOM.render(React.createElement(WeightsField, null), weightsContainer);
 
 },{"react":424,"react-bootstrap":92,"react-dom":266,"react-webstorage":267}]},{},[430]);

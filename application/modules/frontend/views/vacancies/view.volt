@@ -1,3 +1,6 @@
+<script type="text/javascript">
+    var vacancyId = {{ vacancy.id }};
+</script>
 <div class="container">
     <div class="row info" style="text-align:center;">
         <div class="col-xs-12 alert alert-info">
@@ -80,6 +83,13 @@
 
                     <div class="bs-callout bs-callout-danger">
                         <h4>Додавання ваги вакансії</h4>
+                        <table class="table table-striped table-responsive ">
+                            <thead>
+                            <tr><th>Поле ваги&nbsp;&nbsp;</th>
+                                <th>Операція</th>
+                                <th>Значення</th>
+                            </tr></thead>
+                        </table>
                         <div id="weightsContainer"></div>
                     </div>
 

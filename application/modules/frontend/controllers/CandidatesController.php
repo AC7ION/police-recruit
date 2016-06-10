@@ -61,7 +61,7 @@ class CandidatesController extends Controller
         if ($candidates) {
             $paginator = new Paginator(array(
                 'data' => $candidates,
-                'limit'=> 5,
+                'limit'=> 15,
                 'page' => $numberPage
             ));
             $this->view->page = $paginator->getPaginate();

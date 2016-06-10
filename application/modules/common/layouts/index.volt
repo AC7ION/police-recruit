@@ -50,6 +50,7 @@
         {{ content() }}
         {{ partial('footer') }}
     </div>
+    <script src="/src/vendor/jquery/dist/jquery.min.js"></script>
     <script src="/js/main.js"></script>
 </body>
 </html>
