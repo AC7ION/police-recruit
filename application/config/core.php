@@ -1,8 +1,17 @@
 <?php
 
+use Phalcon\Config;
 use Phalcon\Mvc\Router;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
+use Phalcon\UserPlugin\Plugin\Security as SecurityPlugin;
+use Phalcon\UserPlugin\Auth\Auth;
+use Phalcon\UserPlugin\Acl\Acl;
+use Phalcon\UserPlugin\Mail\Mail;
+use Phalcon\Flash\Direct as FlashDirect;
+use Phalcon\Session\Adapter\Files as Session;
+
+
 
 date_default_timezone_set('US/Eastern');
 setlocale(LC_ALL, 'ru_RU.UTF-8');
@@ -21,6 +30,12 @@ return array(
             '__construct' => array(
                 $parameters['db']
             )
+        ),
+        'config' => array(
+            'class' => function () use ($parameters) {
+
+                return new Config($parameters);
+            }
         ),
         'logger' => array(
             'class' => '\Phalcon\Logger\Adapter\File',
@@ -45,7 +60,7 @@ return array(
 //            }
 //        ),
         'dispatcher' => array(
-            'class' => function ($application) {
+            'class' => function ($application) use ($di) {
                 $evManager = $application->getDI()->getShared('eventsManager');
 
                 $evManager->attach('dispatch:beforeException', function ($event, $dispatcher, $exception) use (&$application) {
@@ -73,6 +88,9 @@ return array(
                     );
                     return false;
                 });
+
+                $security = new SecurityPlugin($di);
+                $evManager->attach('dispatch', $security);
 
                 $dispatcher = new \Phalcon\Mvc\Dispatcher();
                 $dispatcher->setEventsManager($evManager);
@@ -199,6 +217,9 @@ return array(
                     "compiledPath" => APPLICATION_PATH . '/cache/volt'
                 ));
                 $compiler = $volt->getCompiler();
+                $compiler->addFunction('logged_in', function ($resolvedArgs, $expArgs) {
+                    return '!empty($this->session->auth)';
+                });
                 $compiler->addFunction('is_a', 'is_a');
                 $compiler->addFunction('array_splice', 'array_splice');
 
@@ -213,7 +234,49 @@ return array(
             }
         ),
         'auth' => array(
-            'class' => '\App\Service\Auth'
+            'class' => function(Phalcon\Mvc\Application $application) {
+                return new Auth();
+            }
+        ),
+        'acl' => array(
+            'class' => function(Phalcon\Mvc\Application $application) {
+                return new Acl();
+            }
+        ),
+        'mail' => array(
+            'class' => function(Phalcon\Mvc\Application $application) {
+                return new Mail();
+            }
+        ),
+        'flash' => array(
+            'class' => function() {
+                $flash = new FlashDirect(
+                    array(
+                        'error'   => 'alert alert-danger',
+                        'success' => 'alert alert-success',
+                        'notice'  => 'alert alert-info',
+                        'warning' => 'alert alert-warning'
+                    )
+                );
+
+                return $flash;
+            }
+        ),
+        'flashSession' => array(
+            'class' => function() {
+                return new Phalcon\Flash\Session(array(
+                    'error' => 'alert alert-dismissable alert-danger',
+                    'success' => 'alert alert-dismissable alert-success',
+                    'notice' => 'alert alert-dismissable alert-info',
+                ));
+            }
+        ),
+        'session' => array(
+            'class' => function() {
+                $session = new Session();
+                $session->start();
+                return $session;
+            }
         )
     ),
     'application' => array(
