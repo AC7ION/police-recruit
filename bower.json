@@ -19,6 +19,7 @@
     "backbone": "~1.1.2",
     "underscore": "~1.6.0",
     "font-awesome": "~4.2.0",
-    "backgrid": "~0.3.5"
+    "backgrid": "~0.3.5",
+    "jquery.maskedinput": "^1.4.1"
   }
 }

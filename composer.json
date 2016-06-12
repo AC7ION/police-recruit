@@ -23,7 +23,8 @@
     },
     "require-dev": {
         "composer/composer": "1.0.*@dev",
-        "squizlabs/php_codesniffer": "~2.2"
+	"crada/phalcon-user-plugin": "~2.0@dev",
+        "imagine/imagine": "*@dev"
     },
     "autoload": {
         "psr-4": {

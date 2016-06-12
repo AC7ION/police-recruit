@@ -54,7 +54,7 @@ class NewCandidateForm extends Form
             'data-trigger'   => "manual",
             'data-html'      => "true",
             'data-placement' => "right",
-            'required'       => "required",
+//            'required'       => "required",
             'placeholder'    => "Введіть, будь ласка, ПІБ повністю"
         );
         $name = new Text("pib", $name_array);
@@ -102,10 +102,9 @@ class NewCandidateForm extends Form
 
 
         $phoneMobile = new Text("phoneMobile", array(
-            'class' => 'form-control',
-            'value' => '+380',
+            'class' => 'form-control phone',
             'pattern' => '^[0-9-\(\) \+]{10,13}$',
-            'placeholder' => '+380990123123'
+            'placeholder' => '+38(099)012-3123'
         ));
         $phoneMobile->setLabel("Мобільний телефон");
         $phoneMobile->setFilters(array('striptags', 'string'));
@@ -118,7 +117,9 @@ class NewCandidateForm extends Form
 
 
         $phoneHome = new Text("phoneHome", array(
-            'class' => 'form-control'
+            'class' => 'form-control phone',
+            'placeholder' => '+38(035)492-1575'
+
         ));
         $phoneHome->setLabel("Домашній телефон");
         $phoneHome->setFilters(array('striptags', 'string'));
@@ -138,7 +139,7 @@ class NewCandidateForm extends Form
                     'id',
                     'name'
                 ),
-                'id'               => 'marital',
+                'id'               => 'education',
                 'data-placeholder' => '',
                 'class'            => 'chosen-select form-control input-sm',
                 'style'            => ''
@@ -159,7 +160,7 @@ class NewCandidateForm extends Form
                     'id',
                     'name'
                 ),
-                'id'               => 'marital',
+                'id'               => 'educationProfile',
                 'data-placeholder' => '',
                 'class'            => 'chosen-select form-control input-sm',
                 'style'            => ''

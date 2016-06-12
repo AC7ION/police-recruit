@@ -8,7 +8,7 @@
 
     <title>Поліція | Рекрутинг</title>
 
-    <link href="/dist/all.css" rel="stylesheet">
+    <link href="/css/all.css" rel="stylesheet">
     {#<link rel="icon" type="image/png" href="/img/favicon.png" />#}
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
@@ -51,6 +51,9 @@
         {{ partial('footer') }}
     </div>
     <script src="/src/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/src/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/src/vendor/jquery.maskedinput/dist/jquery.maskedinput.min.js"></script>
+    <script src="/js/scripts.js"></script>
     <script src="/js/main.js"></script>
 </body>
 </html>

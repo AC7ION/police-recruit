@@ -9,3 +9,4 @@ application/config/testing.php
 application/config/staging.php
 application/config/parameters.php
 application/cache/*
+public/src/vendor/*

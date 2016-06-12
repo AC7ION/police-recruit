@@ -87,7 +87,7 @@ var WeightsField = React.createClass({
         }
     },
     componentDidMount: function() {
-        this.serverRequest = $.get('/frontend/vacancies/getWeightsById/4', function (result) {
+        this.serverRequest = $.get('/frontend/vacancies/getWeightsById/' + vacancyId, function (result) {
             var serverData = JSON.parse(result);
             //console.log(serverData);
 
